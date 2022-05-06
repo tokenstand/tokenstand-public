@@ -1,0 +1,229 @@
+[
+  {
+    "constant": true,
+    "inputs": [
+      { "name": "fromToken", "type": "address" },
+      { "name": "destToken", "type": "address" },
+      { "name": "amount", "type": "uint256" },
+      { "name": "parts", "type": "uint256" },
+      { "name": "flags", "type": "uint256" }
+    ],
+    "name": "getExpectedReturn",
+    "outputs": [
+      { "name": "returnAmount", "type": "uint256" },
+      { "name": "distribution", "type": "uint256[]" }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      { "name": "fromToken", "type": "address" },
+      { "name": "destToken", "type": "address" },
+      { "name": "amount", "type": "uint256" },
+      { "name": "minReturn", "type": "uint256" },
+      { "name": "distribution", "type": "uint256[]" },
+      { "name": "flags", "type": "uint256" },
+      { "name": "referral", "type": "address" },
+      { "name": "feePercent", "type": "uint256" }
+    ],
+    "name": "swapWithReferral",
+    "outputs": [{ "name": "", "type": "uint256" }],
+    "payable": true,
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [],
+    "name": "renounceOwnership",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      { "name": "tokens", "type": "address[]" },
+      { "name": "amount", "type": "uint256" },
+      { "name": "parts", "type": "uint256[]" },
+      { "name": "flags", "type": "uint256[]" },
+      { "name": "destTokenEthPriceTimesGasPrices", "type": "uint256[]" }
+    ],
+    "name": "getExpectedReturnWithGasMulti",
+    "outputs": [
+      { "name": "returnAmounts", "type": "uint256[]" },
+      { "name": "estimateGasAmount", "type": "uint256" },
+      { "name": "distribution", "type": "uint256[]" }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      { "name": "fromToken", "type": "address" },
+      { "name": "destToken", "type": "address" },
+      { "name": "amount", "type": "uint256" },
+      { "name": "parts", "type": "uint256" },
+      { "name": "flags", "type": "uint256" },
+      { "name": "destTokenEthPriceTimesGasPrice", "type": "uint256" }
+    ],
+    "name": "getExpectedReturnWithGas",
+    "outputs": [
+      { "name": "returnAmount", "type": "uint256" },
+      { "name": "estimateGasAmount", "type": "uint256" },
+      { "name": "distribution", "type": "uint256[]" }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [],
+    "name": "oneSplitImpl",
+    "outputs": [{ "name": "", "type": "address" }],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [],
+    "name": "owner",
+    "outputs": [{ "name": "", "type": "address" }],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [],
+    "name": "isOwner",
+    "outputs": [{ "name": "", "type": "bool" }],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [{ "name": "impl", "type": "address" }],
+    "name": "setNewImpl",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      { "name": "asset", "type": "address" },
+      { "name": "amount", "type": "uint256" }
+    ],
+    "name": "claimAsset",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      { "name": "tokens", "type": "address[]" },
+      { "name": "amount", "type": "uint256" },
+      { "name": "minReturn", "type": "uint256" },
+      { "name": "distribution", "type": "uint256[]" },
+      { "name": "flags", "type": "uint256[]" }
+    ],
+    "name": "swapMulti",
+    "outputs": [{ "name": "", "type": "uint256" }],
+    "payable": true,
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      { "name": "fromToken", "type": "address" },
+      { "name": "destToken", "type": "address" },
+      { "name": "amount", "type": "uint256" },
+      { "name": "minReturn", "type": "uint256" },
+      { "name": "distribution", "type": "uint256[]" },
+      { "name": "flags", "type": "uint256" }
+    ],
+    "name": "swap",
+    "outputs": [{ "name": "", "type": "uint256" }],
+    "payable": true,
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      { "name": "tokens", "type": "address[]" },
+      { "name": "amount", "type": "uint256" },
+      { "name": "minReturn", "type": "uint256" },
+      { "name": "distribution", "type": "uint256[]" },
+      { "name": "flags", "type": "uint256[]" },
+      { "name": "referral", "type": "address" },
+      { "name": "feePercent", "type": "uint256" }
+    ],
+    "name": "swapWithReferralMulti",
+    "outputs": [{ "name": "returnAmount", "type": "uint256" }],
+    "payable": true,
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [{ "name": "newOwner", "type": "address" }],
+    "name": "transferOwnership",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "name": "impl", "type": "address" }],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "constructor"
+  },
+  { "payable": true, "stateMutability": "payable", "type": "fallback" },
+  {
+    "anonymous": false,
+    "inputs": [{ "indexed": true, "name": "newImpl", "type": "address" }],
+    "name": "ImplementationUpdated",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      { "indexed": true, "name": "fromToken", "type": "address" },
+      { "indexed": true, "name": "destToken", "type": "address" },
+      { "indexed": false, "name": "fromTokenAmount", "type": "uint256" },
+      { "indexed": false, "name": "destTokenAmount", "type": "uint256" },
+      { "indexed": false, "name": "minReturn", "type": "uint256" },
+      { "indexed": false, "name": "distribution", "type": "uint256[]" },
+      { "indexed": false, "name": "flags", "type": "uint256[]" },
+      { "indexed": false, "name": "referral", "type": "address" },
+      { "indexed": false, "name": "feePercent", "type": "uint256" }
+    ],
+    "name": "Swapped",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      { "indexed": true, "name": "previousOwner", "type": "address" },
+      { "indexed": true, "name": "newOwner", "type": "address" }
+    ],
+    "name": "OwnershipTransferred",
+    "type": "event"
+  }
+]

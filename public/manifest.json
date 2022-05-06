@@ -1,0 +1,27 @@
+{
+  "short_name": "TOKENSTAND",
+  "name": "TOKENSTAND App",
+  "lang": "en",
+  "description": "Be a DeFi Chef with TokenStand. Swap, earn, stack yields, lend, borrow, leverage all on one decentralized, community driven platform. Welcome home to DeFi",
+  "background_color": "#0D0415",
+  "theme_color": "#F338C3",
+  "dir": "ltr",
+  "display": "fullscreen",
+  "orientation": "portrait",
+  "scope": "/",
+  "start_url": "/",
+  "splash_pages": null,
+  "prefer_related_applications": false,
+  "icons": [
+    {
+      "src": "/icons/icon-512x512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    },
+    {
+      "src": "/icons/icon-192x192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    }
+  ]
+}

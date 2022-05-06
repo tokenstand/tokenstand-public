@@ -1,0 +1,111 @@
+
+.ant-table-thead
+  > tr
+  > th:not(:last-child):not(.ant-table-selection-column):not(.ant-table-row-expand-icon-cell):not([colspan])::before {
+  display: none;
+}
+
+.ant-table {
+  background: none;
+  border: none;
+  box-sizing: border-box;
+  box-shadow: none;
+  .ant-table-column-sorter {
+    display: none;
+  }
+  .ant-table-column-sort {
+    background: none;
+  }
+  .ant-table-tbody > tr.ant-table-row:hover > td {
+    background: none;
+  }
+  tr.ant-table-expanded-row > td,
+  tr.ant-table-expanded-row:hover > td {
+    background: none;
+  }
+}
+
+.ant-table-placeholder:hover, .ant-table-tbody > tr.ant-table-placeholder:hover > td {
+  background: none;
+}
+
+.add-pool-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  height: 82px;
+  align-items: center;
+}
+$n: 20;
+@media(max-width: 767px) {
+  $n: 10 !important; 
+}
+@for $i from 1 through $n {
+  $v: random(90) + 9; 
+  $h: random(400) + 50; 
+  $d: calc(random(70) / 10) + 4; 
+  @media(max-width: 767px) {
+    $v: random(200); 
+    $h: random(200) + 50; 
+    
+  }
+  .meteor-#{$i} {
+    z-index: 1;
+    position: absolute;
+    top: $h + px !important;
+    left: $v*1%;
+    width: 400px;
+    height: 2px;
+    transform: rotate(-55deg);
+    background-image: linear-gradient(to right, #fff, rgba(255,255,255,0));
+    animation: meteor $d+s linear  infinite;
+    opacity: 0.8;
+    &:before {
+      content: "";
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      margin-top: -2px;
+      background: rgba(#fff,.7);
+      box-shadow: 0 0 15px 3px #fff;
+    }
+    
+  }
+}
+
+@keyframes meteor {
+  0% {
+    opacity: 1;
+    margin-top: -300px;
+    margin-right: -300px;
+  }
+  12% {
+    opacity: 0;
+  }
+  15% {
+    margin-top: 300px;
+    margin-left: -600px;
+    opacity: 0;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+$s: 1000;
+$shadow: ();
+
+@for $i from 1 through $s {
+  $x: random(500);
+  $y: random(4000);
+  $shadow: $shadow, ( $x+px $y+px #fff) !global;
+}
+
+.star {
+  width: 1px;
+  height: 1px;
+  background: transparent;
+  box-shadow: $shadow;
+}
+

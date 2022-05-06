@@ -1,0 +1,933 @@
+[
+  {
+    "inputs": [
+      {
+        "internalType": "contract TokenStand",
+        "name": "_stand",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "_devAddr",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_standPerBlock",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_startBlock",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "constructor"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "uint256",
+        "name": "fid",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "duration",
+        "type": "uint256"
+      }
+    ],
+    "name": "DurationUpdated",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "user",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "uint256",
+        "name": "fid",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "EmergencyWithdraw",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "uint256",
+        "name": "fid",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "allocPoint",
+        "type": "uint256"
+      },
+      {
+        "indexed": true,
+        "internalType": "contract IERC20",
+        "name": "lpToken",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "contract IERC20",
+        "name": "gift",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "duration",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "rewardDistribution",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "scale",
+        "type": "uint256"
+      }
+    ],
+    "name": "LogFarmAddition",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "uint256",
+        "name": "fid",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "allocPoint",
+        "type": "uint256"
+      }
+    ],
+    "name": "LogSetFarm",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "uint256",
+        "name": "fid",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "lastRewardBlock",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "lpSupply",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "accStandPerShare",
+        "type": "uint256"
+      }
+    ],
+    "name": "LogUpdateFarm",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "previousOwner",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "newOwner",
+        "type": "address"
+      }
+    ],
+    "name": "OwnershipTransferred",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "uint256",
+        "name": "fid",
+        "type": "uint256"
+      },
+      {
+        "indexed": true,
+        "internalType": "contract IERC20",
+        "name": "gift",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "RewardAdded",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "uint256",
+        "name": "fid",
+        "type": "uint256"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "rewardDistribution",
+        "type": "address"
+      }
+    ],
+    "name": "RewardDistributionChanged",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "uint256",
+        "name": "fid",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "scale",
+        "type": "uint256"
+      }
+    ],
+    "name": "ScaleUpdated",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "user",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "uint256",
+        "name": "fid",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "standAmount",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "rewardAmount",
+        "type": "uint256"
+      }
+    ],
+    "name": "Staked",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "user",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "uint256",
+        "name": "fid",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "standAmount",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "rewardAmount",
+        "type": "uint256"
+      }
+    ],
+    "name": "Withdrawn",
+    "type": "event"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "allocPoint",
+        "type": "uint256"
+      },
+      {
+        "internalType": "contract IERC20",
+        "name": "_lpToken",
+        "type": "address"
+      },
+      {
+        "internalType": "contract IERC20",
+        "name": "_gift",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_duration",
+        "type": "uint256"
+      },
+      {
+        "internalType": "address",
+        "name": "_rewardDistribution",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_scale",
+        "type": "uint256"
+      },
+      {
+        "internalType": "bool",
+        "name": "_withUpdate",
+        "type": "bool"
+      }
+    ],
+    "name": "addFarm",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_devaddr",
+        "type": "address"
+      }
+    ],
+    "name": "dev",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "devaddr",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "fid",
+        "type": "uint256"
+      }
+    ],
+    "name": "emergencyWithdraw",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "name": "farmInfo",
+    "outputs": [
+      {
+        "internalType": "contract IERC20",
+        "name": "lpToken",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "allocPoint",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "lastRewardBlock",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "accStandPerShare",
+        "type": "uint256"
+      },
+      {
+        "internalType": "contract IERC20",
+        "name": "gift",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "scale",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "duration",
+        "type": "uint256"
+      },
+      {
+        "internalType": "address",
+        "name": "rewardDistribution",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "periodFinish",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "rewardRate",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "lastUpdateTime",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "rewardPerTokenStored",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "farmLength",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "farms",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "fid",
+        "type": "uint256"
+      }
+    ],
+    "name": "lastTimeRewardApplicable",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "name": "lpToken",
+    "outputs": [
+      {
+        "internalType": "contract IERC20",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "massUpdateFarms",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "fid",
+        "type": "uint256"
+      }
+    ],
+    "name": "migrate",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "migrator",
+    "outputs": [
+      {
+        "internalType": "contract IMigratorFarm",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "fid",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "reward",
+        "type": "uint256"
+      }
+    ],
+    "name": "notifyRewardAmount",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "owner",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "fid",
+        "type": "uint256"
+      },
+      {
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      }
+    ],
+    "name": "pendingGift",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "pending",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "fid",
+        "type": "uint256"
+      },
+      {
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      }
+    ],
+    "name": "pendingStand",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "pending",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "renounceOwnership",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "fid",
+        "type": "uint256"
+      }
+    ],
+    "name": "rewardPerToken",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256[]",
+        "name": "fids",
+        "type": "uint256[]"
+      },
+      {
+        "internalType": "uint256[]",
+        "name": "allocPoints",
+        "type": "uint256[]"
+      },
+      {
+        "internalType": "bool",
+        "name": "withUpdate",
+        "type": "bool"
+      }
+    ],
+    "name": "set",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "fid",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "duration",
+        "type": "uint256"
+      }
+    ],
+    "name": "setDuration",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "contract IMigratorFarm",
+        "name": "_migrator",
+        "type": "address"
+      }
+    ],
+    "name": "setMigrator",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "fid",
+        "type": "uint256"
+      },
+      {
+        "internalType": "address",
+        "name": "rewardDistribution",
+        "type": "address"
+      }
+    ],
+    "name": "setRewardDistribution",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "fid",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "scale",
+        "type": "uint256"
+      }
+    ],
+    "name": "setScale",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "fid",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "stake",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "stand",
+    "outputs": [
+      {
+        "internalType": "contract TokenStand",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "standPerBlock",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "startBlock",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "totalAllocPoint",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "newOwner",
+        "type": "address"
+      }
+    ],
+    "name": "transferOwnership",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "newMasterChef",
+        "type": "address"
+      }
+    ],
+    "name": "transferStandOwnership",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "fid",
+        "type": "uint256"
+      },
+      {
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      }
+    ],
+    "name": "updateFarm",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      },
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "name": "userInfo",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "rewardDebt",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "userRewardPerTokenPaid",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "rewards",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "fid",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "withdraw",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  }
+]

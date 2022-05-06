@@ -1,0 +1,96 @@
+import { ChainId } from '@sushiswap/sdk';
+import { ethers } from "ethers";
+import { useCallback, useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { useChainId } from '../../hooks';
+import { useActiveWeb3React } from "../../hooks/useActiveWeb3React";
+import useDebounce from "../../hooks/useDebounce";
+import useIsWindowVisible from "../../hooks/useIsWindowVisible";
+import { updateBlockNumber } from "./actions";
+
+const defaultProvider = {
+  [ChainId.MAINNET]: ethers.getDefaultProvider(`${process.env.NEXT_PUBLIC_FULLNODE_ETH}`),
+  [ChainId.BSC]: ethers.getDefaultProvider(`${process.env.NEXT_PUBLIC_FULLNODE_BSC}`),
+  [ChainId.RINKEBY]: ethers.getDefaultProvider(`${process.env.NEXT_PUBLIC_FULLNODE_RINKENY}`),
+  [ChainId.BSC_TESTNET]: ethers.getDefaultProvider(`${process.env.NEXT_PUBLIC_FULLNODE_BSCTESTNET}`),
+  [ChainId.ARBITRUM]: ethers.getDefaultProvider(`${process.env.NEXT_PUBLIC_FULLNODE_ARBITRUM}`),
+  [ChainId.KOVAN]: ethers.getDefaultProvider(`${process.env.NEXT_PUBLIC_FULLNODE_KOVAN}`)
+}
+export default function Updater(): null {
+  const { chainId } = useChainId();
+  const dispatch = useDispatch();
+  const library = defaultProvider[chainId? chainId: ChainId.RINKEBY]
+  const windowVisible = useIsWindowVisible();
+
+  const [state, setState] = useState<{
+    chainId: number | undefined;
+    blockNumber: number | null;
+  }>({
+    chainId,
+    blockNumber: null,
+  });
+
+  const blockNumberCallback = useCallback(
+    (blockNumber: number) => {
+      setState((state) => {
+        if (chainId === state.chainId) {
+          if (typeof state.blockNumber !== "number")
+            return { chainId, blockNumber };
+          return {
+            chainId,
+            blockNumber: Math.max(blockNumber, state.blockNumber),
+          };
+        }
+        return state;
+      });
+    },
+    [chainId, setState]
+  );
+
+  // attach/detach listeners
+  useEffect(() => {
+    
+    if (!library || !chainId || !windowVisible) return undefined;
+
+    setState({ chainId, blockNumber: null });
+
+    library
+      .getBlockNumber()
+      .then(blockNumberCallback)
+      .catch((error) =>
+        console.error(
+          `Failed to get block number for chainId: ${chainId}`,
+          error
+        )
+      );
+
+    library.on("block", blockNumberCallback);
+    return () => {
+      library.removeListener("block", blockNumberCallback);
+    };
+  }, [dispatch, chainId, library, blockNumberCallback, windowVisible]);
+
+  const debouncedState = useDebounce(state, 100);
+
+  useEffect(() => {
+    if (
+      !debouncedState.chainId ||
+      !debouncedState.blockNumber ||
+      !windowVisible
+    )
+      return;
+    dispatch(
+      updateBlockNumber({
+        chainId: debouncedState.chainId,
+        blockNumber: debouncedState.blockNumber,
+      })
+    );
+  }, [
+    windowVisible,
+    dispatch,
+    debouncedState.blockNumber,
+    debouncedState.chainId,
+  ]);
+
+  return null;
+}
